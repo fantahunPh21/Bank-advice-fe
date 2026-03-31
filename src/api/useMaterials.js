@@ -9,7 +9,15 @@ export function useMaterials({ keyword = '', pageNumber = 0, pageSize = 10 } = {
     const url = `${API_BASE_URL}/materials/fetch?pageNumber=${pageNumber}&pageSize=${pageSize}${keyword ? `&keyword=${encodeURIComponent(keyword)}` : ''}`
     fetch(url)
       .then(async (res) => {
-        if (!res.ok) throw new Error(await res.text())
+        if (!res.ok) {
+          if (res.status === 401 || res.status === 403) {
+            localStorage.removeItem('ce_token');
+            localStorage.removeItem('ce_user');
+            window.location.href = '/login';
+            throw new Error('Session expired or access denied. Please log in again.');
+          }
+          throw new Error(await res.text());
+        }
         return res.json()
       })
       .then((json) => {

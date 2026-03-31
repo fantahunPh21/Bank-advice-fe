@@ -147,39 +147,14 @@ const Header = ({ onToggleSidebar, collapsed }) => {
         </div>
       </div>
 
-      {/* Center Section - Search (Only show if logged in) */}
-      <div style={{ flex: 1, maxWidth: '400px', margin: '0 24px' }}>
-        {auth?.token && (
-          <Search
-            placeholder="Search anything..."
-            allowClear
-            size="middle"
-            style={{ width: '100%' }}
-            onSearch={(value) => console.log('Search:', value)}
-          />
-        )}
-      </div>
+      {/* Center Section - Empty spacer */}
+      <div style={{ flex: 1 }} />
 
       {/* Right Section - Actions & User */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         {auth?.token && (
           <>
-            {/* Notifications */}
-            <Badge count={3} size="small">
-              <Button
-                type="text"
-                icon={<BellOutlined />}
-                size="middle"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-              />
-            </Badge>
+
 
             {/* Fullscreen Toggle */}
             <Button

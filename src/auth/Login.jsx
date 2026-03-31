@@ -56,32 +56,20 @@ const Login = () => {
 
         {/* Left Branding Side */}
         <div className="auth-side-panel">
-          <div style={{ position: 'absolute', top: -100, left: -100, width: 300, height: 300, background: 'rgba(255,255,255,0.1)', borderRadius: '50%' }}></div>
-          <div style={{ position: 'absolute', bottom: -50, right: -50, width: 200, height: 200, background: 'rgba(255,255,255,0.05)', borderRadius: '50%' }}></div>
+          <div style={{ position: 'absolute', top: -100, left: -100, width: 300, height: 300, background: 'rgba(59,130,246,0.05)', borderRadius: '50%' }}></div>
+          <div style={{ position: 'absolute', bottom: -50, right: -50, width: 200, height: 200, background: 'rgba(59,130,246,0.03)', borderRadius: '50%' }}></div>
 
-          <div className="logo-badge" style={{ width: '64px', height: '64px', borderRadius: '16px', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}>
-            <SafetyCertificateOutlined style={{ fontSize: '32px', color: '#1d4ed8' }} />
+          <div className="logo-badge" style={{ width: '80px', height: '80px', borderRadius: '16px', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px', boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
+            <img src="/bank-advice/steely.jpg" alt="SteelyRMI Logo" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
           </div>
 
-          <Title level={1} style={{ color: 'white', margin: 0, fontSize: '36px', fontWeight: 800 }}>BANK ADVICE</Title>
-          <Paragraph style={{ color: 'rgba(255,255,255,0.8)', fontSize: '18px', marginTop: '16px', lineHeight: '1.6' }}>
-            The next generation of bank advice management and financial confirmation. Secure, fast, and reliable.
-          </Paragraph>
+          <Title level={1} style={{ color: '#1e293b', margin: 0, fontSize: '36px', fontWeight: 800 }}>SteelyRMI</Title>
+          <Paragraph style={{ color: '#475569', fontSize: '18px', marginTop: '16px', lineHeight: '1.6' }}>
+            The bank advice management and financial confirmation.</Paragraph>
 
           <div style={{ marginTop: 'auto' }}>
             <Space direction="vertical" size="middle">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981' }}></div>
-                <Text style={{ color: 'white' }}>Real-time transaction tracking</Text>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981' }}></div>
-                <Text style={{ color: 'white' }}>Automated reconciliation</Text>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981' }}></div>
-                <Text style={{ color: 'white' }}>Multi-role access control</Text>
-              </div>
+
             </Space>
           </div>
         </div>
@@ -89,8 +77,8 @@ const Login = () => {
         {/* Right Form Side */}
         <div className="auth-form-side">
           <div style={{ marginBottom: '32px' }}>
-            <Title level={2} style={{ color: 'white', margin: 0 }}>Welcome Back</Title>
-            <Text style={{ color: '#94a3b8' }}>Please enter your credentials to access your account</Text>
+            <Title level={2} style={{ color: '#1e293b', margin: 0 }}>Welcome Back</Title>
+            <Text style={{ color: '#64748b' }}>Please enter your credentials to access your account</Text>
           </div>
 
           <Form layout="vertical" onFinish={onFinish} requiredMark={false} size="large">
@@ -134,7 +122,6 @@ const Login = () => {
 
           <div style={{ marginTop: '24px', textAlign: 'center' }}>
             <Text style={{ color: '#64748b' }}>
-              Protected by hardware security module encryption.
             </Text>
           </div>
         </div>

@@ -67,7 +67,7 @@ td.ant-table-column-sort {
 
 /* Keep icons inline to avoid layout shifts */
 .anticon {
-    display: inline-block !important;
+    display: inline-flex !important;
 }
 
 /* Prevent overly large forced font-size on small controls */
@@ -77,37 +77,9 @@ td.ant-table-column-sort {
 
 /* If things still look off, I can progressively undo other overrides or scope them. */
 
-/* ===== Select (dropdown) appearance fixes ===== */
-/* Make single selects taller and vertically center content */
-.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-    height: 40px !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 12px !important;
-    border-radius: 8px !important;
-}
-
-/* Ensure selected text and placeholder are vertically centered */
-.ant-select-selection-item, .ant-select-selection-placeholder {
-    line-height: 1 !important;
-    padding-top: 2px !important;
-}
-
-/* Position arrow clearly and allow pointer events */
-.ant-select .ant-select-arrow {
-    right: 12px !important;
-    pointer-events: auto !important;
-    color: rgba(0,0,0,0.45) !important;
-}
-
 /* Dropdown should appear over other content */
 .ant-select-dropdown {
     z-index: 1200 !important;
-}
-
-/* Slightly larger option padding for readability */
-.ant-select-item-option-content {
-    padding: 8px 12px !important;
 }
 .ant-pagination-prev {
     border: 1px solid #dee2e6;
@@ -161,9 +133,7 @@ td.ant-table-column-sort {
     float: none !important;
 }
 
-.ant-table-tbody > tr > td {
-    /* border-bottom: 0px solid #f0f0f0; */
-}
+/* .ant-table-tbody > tr > td { border-bottom: 0px solid #f0f0f0; } */
 table.table td h2 a {
     color: #333 !important;
 }
@@ -204,7 +174,7 @@ td.ant-table-cell {
     border-radius: 8px;
 }
 .anticon {
-    display: flex;
+    display: inline-flex;
     color: inherit;
     font-style: normal;
     line-height: 0;
@@ -351,62 +321,11 @@ td.ant-table-column-sort {
     display: inline-block;
     width: auto;
 }
-.ant-select {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    color: rgba(0, 0, 0, 0.85);
-    font-size: 14px;
-    font-variant: tabular-nums;
-    line-height: 1.5715;
-    list-style: none;
-    font-feature-settings: 'tnum';
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-.ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    position: relative;
-    background-color: #fff;
-    border: 1px solid #d9d9d9;
-    border-radius: 2px;
-    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-    width: 100%;
-    height: 32px;
-    padding: 0 11px;
-}
-.ant-select-arrow {
-    display: inline-block;
-    color: inherit;
-    font-style: normal;
-    line-height: 0;
-    text-transform: none;
-    vertical-align: -0.125em;
-    text-rendering: optimizelegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: absolute;
-    top: 50%;
-    right: 11px;
-    display: flex;
-    align-items: center;
-    height: 12px;
-    margin-top: -6px;
-    color: rgba(0, 0, 0, 0.25);
-    font-size: 12px;
-    line-height: 1;
-    text-align: center;
-    pointer-events: none;
-}
 .ant-table-pagination-right {
     float: none !important;
 }
 
-.ant-table-tbody > tr > td {
-    /* border-bottom: 0px solid #f0f0f0; */
-}
+/* .ant-table-tbody > tr > td { border-bottom: 0px solid #f0f0f0; } */
 table.table td h2 a {
     color: #333 !important;
 }

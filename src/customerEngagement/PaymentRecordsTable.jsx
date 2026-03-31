@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { 
-  Table, 
-  Tag, 
-  Button, 
-  Dropdown, 
-  message, 
-  Space, 
+import {
+  Table,
+  Tag,
+  Button,
+  Dropdown,
+  message,
+  Space,
   Tooltip,
   Modal,
   Descriptions,
@@ -21,9 +21,9 @@ import {
   Collapse,
   DatePicker
 } from "antd";
-import { 
-  EyeOutlined, 
-  MoreOutlined, 
+import {
+  EyeOutlined,
+  MoreOutlined,
   CheckCircleOutlined,
   CloseCircleOutlined,
   ExclamationCircleOutlined,
@@ -31,7 +31,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { usePaymentRecords } from "../api/usePaymentRecords";
-import { useAuth, hasAnyRole } from "../auth/AuthProvider"; 
+import { useAuth, hasAnyRole } from "../auth/AuthProvider";
 import AddTransactionModal from "./AddTransactionModal";
 import { RoleBasedTransactionWrapper } from "../components/RoleBasedTransactionWrapper";
 import { PaymentStatusBadge } from "../components/StatusBasedContent";
@@ -53,6 +53,7 @@ export function PaymentRecordsTable() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterForm] = Form.useForm();
   const [customerSuggestions, setCustomerSuggestions] = useState([]);
+  const [salesPersonSuggestions, setSalesPersonSuggestions] = useState([]);
 
   const handleCustomerSearch = async (value) => {
     if (!value || value.length < 2) {
@@ -73,7 +74,26 @@ export function PaymentRecordsTable() {
       console.error(e);
     }
   };
-  
+
+  const handleSalesPersonSearch = async (value) => {
+    if (!value || value.length < 2) {
+      setSalesPersonSuggestions([]);
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE_URL}/users/sales?keyword=${encodeURIComponent(value)}&pageNumber=0&pageSize=10`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      setSalesPersonSuggestions((data.content || []).map(u => ({
+        label: u.name || u.username || u.email,
+        value: u.name || u.username || u.email
+      })));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   // Close Transaction State
   const [isCloseModalOpen, setIsCloseModalOpen] = useState(false);
   const [recordToClose, setRecordToClose] = useState(null);
@@ -90,9 +110,9 @@ export function PaymentRecordsTable() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [recordToEdit, setRecordToEdit] = useState(null);
 
-  const { 
-    records, 
-    isLoading, 
+  const {
+    records,
+    isLoading,
     pagination,
     goToPage,
     closePaymentRecord,
@@ -100,7 +120,7 @@ export function PaymentRecordsTable() {
     refreshRecords,
     handleFilterChange,
     resetFilters,
-    filters 
+    filters
   } = usePaymentRecords();
 
   // Sync selected record when main records data changes
@@ -198,6 +218,13 @@ export function PaymentRecordsTable() {
       title: "Customer Name",
       dataIndex: "customerName",
       key: "customer",
+      width: 250,
+      ellipsis: true,
+      render: (text) => (
+        <Tooltip placement="topLeft" title={text}>
+          {text}
+        </Tooltip>
+      ),
     },
     {
       title: "Amount Paid",
@@ -250,7 +277,7 @@ export function PaymentRecordsTable() {
           },
           { type: "divider" },
           // Record-level confirm/reject removed per user request (use line-level in Details)
-          
+
           // Close/Void: Typically Finance/Admin
           (isFinance || isAdmin) && {
             key: "close",
@@ -299,9 +326,9 @@ export function PaymentRecordsTable() {
             <Row gutter={16}>
               <Col span={6}>
                 <Form.Item name="status" label="Status">
-                  <Select placeholder="Filter by status" allowClear>
+                  <Select placeholder="Filter by status" allowClear style={{ width: '100%' }}>
                     <Select.Option value="VOIDED">VOIDED</Select.Option>
-                    <Select.Option value="PENDING">PENDING</Select.Option>
+                    <Select.Option value="REQUESTED">REQUESTED</Select.Option>
                     <Select.Option value="CONFIRMED">CONFIRMED</Select.Option>
                     <Select.Option value="REJECTED">REJECTED</Select.Option>
                     <Select.Option value="CLOSED">CLOSED</Select.Option>
@@ -319,46 +346,28 @@ export function PaymentRecordsTable() {
                     onSearch={handleCustomerSearch}
                     notFoundContent={null}
                     options={customerSuggestions}
+                    style={{ width: '100%' }}
                   />
                 </Form.Item>
               </Col>
               <Col span={6}>
                 <Form.Item name="salesPerson" label="Sales Person">
-                  <Input placeholder="Sales person" allowClear />
+                  <Select
+                    showSearch
+                    allowClear
+                    placeholder="Search sales person"
+                    defaultActiveFirstOption={false}
+                    filterOption={false}
+                    onSearch={handleSalesPersonSearch}
+                    notFoundContent={null}
+                    options={salesPersonSuggestions}
+                    style={{ width: '100%' }}
+                  />
                 </Form.Item>
               </Col>
               <Col span={6}>
                 <Form.Item name="dateRange" label="Date Range">
                   <RangePicker style={{ width: '100%' }} />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={6}>
-                <Form.Item name="shopBranchId" label="Shop Branch ID">
-                  <Input type="number" placeholder="Shop Branch ID" allowClear />
-                </Form.Item>
-              </Col>
-              <Col span={6}>
-                <Form.Item name="customerId" label="Customer ID">
-                  <Input type="number" placeholder="Customer ID" allowClear />
-                </Form.Item>
-              </Col>
-              <Col span={6}>
-                <Form.Item name="bankAccountId" label="Bank Account ID">
-                  <Input type="number" placeholder="Bank Account ID" allowClear />
-                </Form.Item>
-              </Col>
-              <Col span={6}>
-                <Form.Item name="createdBySalesPerson" label="Created By (ID)">
-                  <Input type="number" placeholder="Sales Person ID" allowClear />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={6}>
-                <Form.Item name="closedByFinanceManager" label="Closed By (ID)">
-                  <Input type="number" placeholder="Finance Manager ID" allowClear />
                 </Form.Item>
               </Col>
             </Row>
@@ -379,22 +388,22 @@ export function PaymentRecordsTable() {
         loading={isLoading}
         scroll={{ x: 1000 }}
         pagination={{
-            current: pagination.currentPage + 1,
-            pageSize: pagination.pageSize,
-            total: pagination.totalElements,
-            showSizeChanger: true,
-            pageSizeOptions: ['5', '10', '20', '50'],
-            onChange: (page, size) => {
-              if (size !== pagination.pageSize) {
-                changePageSize(size);
-              } else {
-                goToPage(page - 1);
-              }
-            },
+          current: pagination.currentPage + 1,
+          pageSize: pagination.pageSize,
+          total: pagination.totalElements,
+          showSizeChanger: true,
+          pageSizeOptions: ['5', '10', '20', '50'],
+          onChange: (page, size) => {
+            if (size !== pagination.pageSize) {
+              changePageSize(size);
+            } else {
+              goToPage(page - 1);
+            }
+          },
         }}
       />
-      
-      <AddTransactionModal 
+
+      <AddTransactionModal
         visible={isEditModalOpen}
         isEditing={true}
         recordData={recordToEdit}
@@ -402,10 +411,10 @@ export function PaymentRecordsTable() {
         onSuccess={refreshRecords}
       />
 
-      <RecordDetailsDialog 
-        open={isModalOpen} 
-        onCancel={() => setIsModalOpen(false)} 
-        record={selectedRecord} 
+      <RecordDetailsDialog
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        record={selectedRecord}
       />
 
       {/* Close Transaction Modal */}
@@ -419,9 +428,9 @@ export function PaymentRecordsTable() {
         okButtonProps={{ danger: true }}
       >
         <Form form={closeForm} layout="vertical" onFinish={handleClosePaymentRecord}>
-          <Form.Item 
-            name="finalRemark" 
-            label="Final Remark" 
+          <Form.Item
+            name="finalRemark"
+            label="Final Remark"
             rules={[{ required: true, message: 'Please enter a final remark' }]}
           >
             <TextArea rows={4} placeholder="Enter final remark for closing this transaction..." />
@@ -441,9 +450,9 @@ export function PaymentRecordsTable() {
       >
         <Form form={voidForm} layout="vertical" onFinish={handleVoidLine}>
           {recordToVoid?.paymentRecordLine && Array.isArray(recordToVoid.paymentRecordLine) ? (
-            <Form.Item 
-              name="paymentRecordLineId" 
-              label="Select Line to Void" 
+            <Form.Item
+              name="paymentRecordLineId"
+              label="Select Line to Void"
               rules={[{ required: true, message: 'Please select a line' }]}
             >
               <Select placeholder="Select a line to void">
@@ -462,9 +471,9 @@ export function PaymentRecordsTable() {
               <Form.Item name="paymentRecordLineId" hidden initialValue={recordToVoid.paymentRecordsId}><Input /></Form.Item>
             </div>
           )}
-          <Form.Item 
-            name="voidReason" 
-            label="Void Reason" 
+          <Form.Item
+            name="voidReason"
+            label="Void Reason"
             rules={[{ required: true, message: 'Please enter a void reason' }]}
           >
             <TextArea rows={4} placeholder="Enter reason for voiding this rejected line..." />

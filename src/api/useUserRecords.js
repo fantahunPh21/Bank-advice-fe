@@ -18,7 +18,15 @@ export function useUserRecords() {
       const response = await fetch(
         `${BASE_URL}?keyword=${keyword}&pageNumber=${page - 1}&pageSize=${size}`
       );
-      if (!response.ok) throw new Error("Failed to fetch user records");
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          localStorage.removeItem('ce_token');
+          localStorage.removeItem('ce_user');
+          window.location.href = "/login";
+          throw new Error("Session expired or access denied. Please log in again.");
+        }
+        throw new Error("Failed to fetch user records");
+      }
       const result = await response.json();
       setUsers(result.content || []);
       setTotalItems(result.totalElements || result.pageable?.totalElements || 0);

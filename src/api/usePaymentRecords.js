@@ -102,11 +102,11 @@ export function usePaymentRecords(initialPage = 0, initialPageSize = 10) {
         }
 
         if (!response.ok) {
-          if (response.status === 401) {
+          if (response.status === 401 || response.status === 403) {
             localStorage.removeItem('ce_token');
             localStorage.removeItem('ce_user');
             window.location.href = "/login";
-            throw new Error("Session expired. Please log in again.");
+            throw new Error("Session expired or access denied. Please log in again.");
           }
           throw new Error(errorText || `Error ${response.status}: Failed to fetch payment records`);
         }

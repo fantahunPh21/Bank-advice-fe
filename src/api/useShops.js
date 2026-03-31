@@ -62,6 +62,12 @@ export function useShops() {
       });
 
       if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          localStorage.removeItem('ce_token');
+          localStorage.removeItem('ce_user');
+          window.location.href = "/login";
+          throw new Error("Session expired or access denied. Please log in again.");
+        }
         const errorText = await response.text();
         
         // Retry logic for FINANCE users without companyId

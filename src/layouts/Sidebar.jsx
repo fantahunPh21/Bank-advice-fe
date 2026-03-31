@@ -25,7 +25,7 @@ const Sidebar = ({ selected, collapsed }) => {
   const navigate = useNavigate()
 
   if (!token) return null
-  
+
   const userRole = user?.role;
   const isAdmin = userRole === ROLES.ADMIN;
   const permissions = ROLE_PERMISSIONS[userRole] || ROLE_PERMISSIONS[ROLES.SALESMAN];
@@ -74,7 +74,7 @@ const Sidebar = ({ selected, collapsed }) => {
       label: <Link to="/settings" style={{ textDecoration: 'none' }}>Settings</Link>,
     }
   ].filter(item => {
-    switch(item.key) {
+    switch (item.key) {
       case 'dashboard': return permissions.canViewDashboard;
       case 'companies': return permissions.canManageCompanies;
       case 'users': return permissions.canManageUsers;
@@ -124,7 +124,7 @@ const Sidebar = ({ selected, collapsed }) => {
           border: '1px solid #f0f0f0'
         }}>
           <img
-            src="/steely.jpg"
+            src="/bank-advice/steely.jpg"
             alt="Logo"
             style={{
               width: '100%',
