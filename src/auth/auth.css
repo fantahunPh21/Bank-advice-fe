@@ -1,0 +1,141 @@
+/* Premium Auth Styles */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  padding: 24px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.auth-container::before {
+  content: '';
+  position: absolute;
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+  top: -10vw;
+  right: -10vw;
+  border-radius: 50%;
+  animation: float 20s infinite alternate;
+}
+
+.auth-container::after {
+  content: '';
+  position: absolute;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+  bottom: -15vw;
+  left: -15vw;
+  border-radius: 50%;
+  animation: float 25s infinite alternate-reverse;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(5vw, 5vw); }
+}
+
+.auth-wrapper {
+  display: flex;
+  width: 900px;
+  max-width: 95%;
+  height: 600px;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 32px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.auth-side-panel {
+  flex: 1;
+  background: linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-form-side {
+  flex: 1;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #0f172a;
+}
+
+.premium-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+}
+
+.premium-input:focus, .premium-input-focused {
+  border-color: #3b82f6 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Ant Design Overrides */
+.auth-wrapper .ant-form-item-label > label {
+  color: #94a3b8 !important;
+  font-weight: 500;
+}
+
+.auth-wrapper .ant-input-password {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+}
+
+.auth-wrapper .ant-input-password-input {
+  background: transparent !important;
+  color: white !important;
+}
+
+.auth-wrapper .ant-input-password-icon {
+  color: #94a3b8 !important;
+}
+
+/* OTP Styles */
+.otp-inputs-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.otp-digit {
+  width: 48px !important;
+  height: 56px !important;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  color: white !important;
+  transition: all 0.2s ease !important;
+  padding: 0 !important;
+}
+
+.otp-digit:focus {
+  border-color: #3b82f6 !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+  transform: translateY(-2px);
+}
