@@ -72,12 +72,6 @@ const Header = ({ onToggleSidebar, collapsed }) => {
   // User dropdown menu
   const userMenuItems = [
     {
-      key: 'profile',
-      icon: <UserOutlined />,
-      label: 'Profile',
-      onClick: () => navigate('/profile')
-    },
-    {
       key: 'settings',
       icon: <SettingOutlined />,
       label: 'Settings',

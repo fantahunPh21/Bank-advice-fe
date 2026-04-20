@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Input, Button, message, Space, Typography } from 'antd'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from './AuthProvider'
 import { API_BASE_URL } from '../api/config'
 import { LockOutlined, UserOutlined, ArrowRightOutlined, SafetyCertificateOutlined } from '@ant-design/icons'
@@ -12,11 +12,13 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
   const auth = useAuth()
   const navigate = useNavigate()
-  const location = useLocation()
-  const from = location.state?.from || '/dashboard'
+  const from = '/dashboard'
 
-  // No automatic redirect to dashboard for logged-in users 
-  // This ensures the user starts at the login page if they navigate to it
+  useEffect(() => {
+    if (auth.token) {
+      navigate('/dashboard', { replace: true })
+    }
+  }, [auth.token, navigate])
 
   const onFinish = async (vals) => {
     setLoading(true)
@@ -42,7 +44,7 @@ const Login = () => {
 
       auth.login({ token: data.token || data.content?.token, user: data.user || data.content })
       message.success('Welcome back!')
-      navigate(from, { replace: true })
+      navigate('/dashboard', { replace: true })
     } catch (e) {
       message.error(e.message || 'Login failed')
     } finally {
