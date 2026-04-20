@@ -11,7 +11,6 @@
 
 # misc
 .DS_Store
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -22,16 +21,15 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env
 
 # typescript
 *.tsbuildinfo
 
 # IDEs
-.vscode/
 .idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+config.bat

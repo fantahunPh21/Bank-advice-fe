@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Button, Space, Descriptions, Divider, List, Card, Row, Col, Typography, Tag } from 'antd';
+import { Modal, Button, Space, Descriptions, Divider, List, Card, Row, Col, Typography } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import SecureImage from '../components/SecureImage';
+import { PaymentStatusBadge } from '../components/StatusBasedContent';
 import TransactionOtpDialog from '../components/TransactionOtpDialog';
 import { useAuth } from '../auth/AuthProvider';
 import { ROLES } from '../api/role-config';
@@ -93,9 +94,7 @@ const RecordDetailsDialog = ({ open, onCancel, record }) => {
           <Descriptions.Item label="Sales Person">{record.salesPerson || 'N/A'}</Descriptions.Item>
           <Descriptions.Item label="Confirmed for Shop">{record.confirmedToShop || 'N/A'}</Descriptions.Item>
           <Descriptions.Item label="Confirmation Status">
-            <Tag color={record.confirmationStatus === "CONFIRMED" ? "success" : "processing"}>
-              {record.confirmationStatus || 'REQUESTED'}
-            </Tag>
+            <PaymentStatusBadge status={record.confirmationStatus || record.requestStatus || 'REQUESTED'} />
           </Descriptions.Item>
           <Descriptions.Item label="Description" span={2}>{record.description || 'No description provided'}</Descriptions.Item>
         </Descriptions>
@@ -112,16 +111,7 @@ const RecordDetailsDialog = ({ open, onCancel, record }) => {
                 title={`Line #${index + 1}: ${line.referenceId || 'N/A'}`}
                 extra={
                   <Space>
-                    <Tag 
-                      color={
-                        line.status?.toUpperCase() === "CONFIRMED" ? "success" : 
-                        line.status?.toUpperCase() === "REJECTED" ? "error" : 
-                        line.status?.toUpperCase() === "PENDING" ? "warning" : "processing"
-                      }
-                      style={{ borderRadius: '4px' }}
-                    >
-                      {line.status || "REQUESTED"}
-                    </Tag>
+                    <PaymentStatusBadge status={line.confirmationStatus || line.status || 'REQUESTED'} />
                     <Text strong>Br. {Number(line.amountPaid || 0).toLocaleString()}</Text>
                   </Space>
                 }

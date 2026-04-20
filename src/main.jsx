@@ -28,8 +28,8 @@ root.render(
           <Route path="/login" element={<Login />} />
           <Route path="/otp-verification" element={<OtpVerification />} />
 
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/dashboard" element={<SalesmanProtectedRoute><Dashboard /></SalesmanProtectedRoute>} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
           
           <Route path="/companies" element={<FinanceProtectedRoute><Companies /></FinanceProtectedRoute>} />
           <Route path="/users" element={<FinanceProtectedRoute><Users /></FinanceProtectedRoute>} />
